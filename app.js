@@ -326,7 +326,7 @@ client.on('data', function(data) {
         if (!res || res.done) {
             var cb = cbs.shift();
             if (cb) cb(res);
-            console.log(res);
+            console.dir(res);
             res = undefined;
         }
     }
