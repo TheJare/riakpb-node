@@ -290,7 +290,8 @@ var client = net.connect(18087, 'localhost', function() { //'connect' listener
     clientWrite(client, encode_GetBucketReq("users"), function(res) { console.log("respuesta al encode_GetBucketReq de los users"); });
     clientWrite(client, encode_ListKeysReq("users"), function(res) { console.log("respuesta a los users"); });
     clientWrite(client, encode_ListKeysReq("flights"), function(res) { console.log("respuesta a los flights"); });
-    clientWrite(client, encode_GetReq("flights", "KLM-5034"), function(res) { console.log("respuesta al get KLM"); client.end(); });
+    clientWrite(client, encode_GetReq("flights", "KLM-5034"), function(res) { console.log("respuesta al get KLM"); });
+    clientWrite(client, encode_GetReq("users", "jarelol"), function(res) { console.log("respuesta al get KLM"); client.end(); });
 });
 
 client.on('data', function(data) {
@@ -326,7 +327,7 @@ client.on('data', function(data) {
         if (!res || res.done) {
             var cb = cbs.shift();
             if (cb) cb(res);
-            console.dir(res);
+            console.log(res);
             res = undefined;
         }
     }
