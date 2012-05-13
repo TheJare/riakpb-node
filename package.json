@@ -1,0 +1,16 @@
+{
+  "author": "Javier Arevalo <jare@iguanademos.com> (http://www.iguanademos.com/Jare)",
+  "name": "riakpb",
+  "description": "Minimal Protocol Buffers interface to Riak",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TheJare/riakpb-node.git"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
