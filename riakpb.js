@@ -11,8 +11,8 @@ var net = require('net');
 
 // -----------------------------
 // Reading protocol buffers
-// Only varints in the Riak protocol buffers are bools and uint8s.
-// So we just use readVarInt to read all of them.
+// Only varints in the Riak protocol buffers are bools, uint8s and uint32s.
+// So we just use readVarInt to read all of them, no need to decode floats or signed ints.
 var readVarInt = function(stream) {
     var idx = stream.idx;
     var buf = stream.buf;
@@ -32,14 +32,6 @@ var readString = function(stream) {
     var s = stream.buf.toString('utf8', stream.idx, stream.idx+l);
     stream.idx += l;
     return s;
-}
-
-var readValue = function(type, stream) {
-    if (type == 0) {
-        return readVarInt(stream);
-    } else if (t == 2) {
-        return readString(stream);
-    }
 }
 
 var decodeLoop = function(stream, cb, len) {
@@ -270,7 +262,7 @@ var addParameters = function(buf, idx, params) {
             idx += p.length;
         } else if (type == "object") {
             buf[idx] = ((i+1) << 3) + 2;
-            var tempv = new Buffer(4096);
+            var tempv = new Buffer(4096);   // TODO: magic number
             var l = addParameters(tempv, 0, p);
             idx = addVarInt(buf, idx+1, l);
             tempv.copy(buf, idx, 0, l);
@@ -288,7 +280,7 @@ var addParameters = function(buf, idx, params) {
 }
 
 var makeMessage = function(msg, params) {
-    var b0 = new Buffer(8192);
+    var b0 = new Buffer(8192);   // TODO: magic number
     var idx = 5;
     if (params) idx = addParameters(b0, idx, params);
     addMessageHeader(b0, idx - 4, msg);
@@ -389,6 +381,7 @@ Client.prototype.end = function() {
 }
 
 Client.prototype.send = function(request, cb) {
+    // Riak pbs only accept one request at a time, so we serialize them
     this.queue.push({request:request, cb:cb});
     if (this.res === undefined) {
         this.nextRequest();
@@ -402,6 +395,7 @@ Client.prototype.nextRequest = function() {
 }
 
 Client.prototype.onEnd = function(cb) {
+    // TODO: handle external disconnects and re-connects
     this.state = 'disconnected';
     console.log('client disconnected');
 }

@@ -1,6 +1,13 @@
-Riakpb-node
+# Riakpb-node
 
-Test implementation of Riak Protocol Buffers in node.js.
+Self-contained implementation of Riak Protocol Buffers in node.js.
+
+Work in progress and not heavily tested, there may be broken functionality, utf8 shenanigans or insufficiently sized buffers.
+
+## References
+
+- Riak API: http://wiki.basho.com/Client-Implementation-Guide.html
+- Google's Protocol Buffers: https://developers.google.com/protocol-buffers/docs/encoding
 
 ## Credits & License
 Copyright by Javier Arevalo in 2012.
