@@ -332,10 +332,16 @@ var addParameters = function(buf, idx, params) {
             idx += p.length;
         } else if (type == "object") {
             buf[idx] = ((i+1) << 3) + 2;
-            var tempv = new Buffer(4096);   // TODO: magic number
-            var l = addParameters(tempv, 0, p);
+
+            var tempv, l = 4096;
+            // If tentative buffer size is too small, retry with required size, which we will know after addParameters()
+            do {
+                tempv = new Buffer(l);
+                l = addParameters(tempv, 0, p);
+            } while (l > tempv.length);
             idx = addVarInt(buf, idx+1, l);
-            tempv.copy(buf, idx, 0, l);
+            if (idx < buf.length) // Unlike the [] accessor, copy() will throw if out of bounds.
+                tempv.copy(buf, idx, 0, l);
             idx += l;
         } else if (type == "boolean") {
             buf[idx] = (i+1) << 3;
@@ -350,9 +356,14 @@ var addParameters = function(buf, idx, params) {
 }
 
 var makeMessage = function(msg, params) {
-    var b0 = new Buffer(8192);   // TODO: magic number
-    var idx = 5;
-    if (params) idx = addParameters(b0, idx, params);
+    var b0, idx, l = 8192;
+    // If tentative buffer size is too small, retry with required size, which we will know after addParameters()
+    do {
+        b0 = new Buffer(l);
+        idx = 5;
+        if (params) idx = addParameters(b0, idx, params);
+        l = idx;
+    } while (idx > b0.length);
     addMessageHeader(b0, idx - 4, msg);
     return b0.slice(0, idx);
 }
