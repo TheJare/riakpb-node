@@ -21,9 +21,10 @@ client.SetBucket("users", {allow_mult:false, n_val:4}, function(err, res) { cons
 client.GetBucket("users", function(err, res) { console.log("GetBucket users response: ", res); });
 client.ListKeys("users", function(err, res) { console.log("users response: ", res); });
 client.ListKeys("flights", function(err, res) { console.log("flights response: ", res); });
+client.Put("flights", "KLM-5034", "Departing soon", {}, function(err, res) { console.log("put KLM-5034 response: ", res); });
 client.Get("flights", "KLM-5034", {}, function(err, res) { console.log("get KLM response: ", res); });
 client.Get("users", "jarelol", {}, function(err, res) { console.log("get jarelol response: ", res); });
-client.Put("users", "nodetestuser", "Hola soy yo", function(err, res) { console.log("put nodetestuser response: ", res); });
+client.Put("users", "nodetestuser", "Hi! Itsa me Mario!", {}, function(err, res) { console.log("put nodetestuser response: ", res); });
 client.Get("users", "nodetestuser", {}, function(err, res) { console.log("get nodetestuser response: ", res); });
 client.PutNokey("users", "Autogen Key", {return_body:true}, function(err, res) { console.log("put Autogen key response: ", res); });
 

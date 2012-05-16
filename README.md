@@ -1,8 +1,11 @@
 # Riakpb-node
 
-Self-contained implementation of Riak Protocol Buffers in node.js.
+Self-contained implementation of a client for a Riak database using Protocol Buffers.
+This is a binary protocol with persistent connection, so it should be faster than independent HTTP requests.
 
-Work in progress and not heavily tested, there may be broken functionality, utf8 shenanigans or insufficiently sized buffers.
+Sometimes it's nice to have a library with no dependencies.
+
+Work in progress and not heavily tested, there may be broken functionality, utf8 shenanigans or unknown bugs.
 
 ## References
 
@@ -16,4 +19,3 @@ Copyright by Javier Arevalo in 2012.
 - @TheJare on twitter
 
 Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
-

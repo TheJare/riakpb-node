@@ -1,5 +1,7 @@
 // ---------------------------
 // Riakpb module
+// Client for a Riak database using Protocol Buffers. This is a binary protocol
+// with persistent connection, so it should be faster than independent HTTP requests.
 //
 // Copyright by Javier Arevalo in 2012.
 // - http://www.iguanademos.com/Jare/
@@ -569,7 +571,7 @@ Client.prototype.onData = function(data) {
         }
         var remainder = this.processPackets(this.pendingBuffers[0]);
         if (remainder) {
-            this.pendingBuffers = remainder;
+            this.pendingBuffers = [remainder];
             this.receivedTotalData = remainder.length;
         } else {
             this.pendingBuffers = [];
