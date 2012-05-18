@@ -329,9 +329,10 @@ var addParameters = function(buf, idx, params) {
         var type = typeof p;
         if (type == "string") {
             buf[idx] = ((i+1) << 3) + 2;
-            idx = addVarInt(buf, idx+1, p.length);
-            buf.write(p, idx, p.length, 'utf8');
-            idx += p.length;
+            var numBytes = Buffer.byteLength(p, 'utf8'); // Utf8 strings may have more bytes than chars, so can't use p.length
+            idx = addVarInt(buf, idx+1, numBytes);
+            buf.write(p, idx, numBytes, 'utf8');
+            idx += numBytes;
         } else if (type == "object") {
             buf[idx] = ((i+1) << 3) + 2;
 
