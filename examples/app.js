@@ -6,7 +6,7 @@
 // Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 // ---------------------------
 
-var Riak = require('./riakpb');
+var Riak = require('../');
 var Client = Riak.Client;
 
 var client = new Riak.Client('localhost', 8087);
