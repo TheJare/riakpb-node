@@ -7,7 +7,6 @@
 // ---------------------------
 
 var Riak = require('../');
-var Client = Riak.Client;
 
 var client = new Riak.Client('localhost', 8087);
 
