@@ -16,7 +16,7 @@ describe('Requests', function() {
             client.GetServerInfo();
             client.GetClientId();
             client.Ping();
-            assert(client.queue.length == 3);
+            assert.strictEqual(client.queue.length, 3);
             done();
         });
     });
